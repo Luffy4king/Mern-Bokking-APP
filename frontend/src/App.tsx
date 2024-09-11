@@ -11,49 +11,58 @@ import Register from './pages/Register';
 import SignIn from './pages/SignIn';
 import AddHotel from './pages/AddHotels';
 import { useAppContext } from './Context/AppContext';
+import MyHotels from './pages/MyHotels';
 
 function App() {
-  const {isLoggedIn} =useAppContext();
+  const { isLoggedIn } = useAppContext();
   return (
     <>
-<Router>
-  <Routes>
-    <Route path="/" element={
-      <Layout>
-      <p>HomePage</p>
-    </Layout>}>
-     
-    </Route>
-    <Route path="/register" element={
-      <Layout>
-        <Register/>
-      </Layout>}>
-     
-    </Route>
+      <Router>
+        <Routes>
+          <Route path="/" element={
+            <Layout>
+              <p>HomePage</p>
+            </Layout>}>
 
-    <Route path="/sign-in" element={
-      <Layout>
-        <SignIn/>
-      </Layout>}>
-     
-    </Route>
+          </Route>
+          <Route path="/register" element={
+            <Layout>
+              <Register />
+            </Layout>}>
 
-    {isLoggedIn && (
-      <>
-    <Route
-    path='/add-hotel'
-    element={
-      <Layout>
-<AddHotel/>
-      </Layout>
-    }
-    />
-    </>
-    )} 
-    
-    <Route path='*' element={<Navigate to="/"/>}/>
-  </Routes>
-</Router>
+          </Route>
+
+          <Route path="/sign-in" element={
+            <Layout>
+              <SignIn />
+            </Layout>}>
+
+          </Route>
+
+          {isLoggedIn && (
+            <>
+              <Route
+                path='/add-hotel'
+                element={
+                  <Layout>
+                    <AddHotel />
+                  </Layout>
+                }
+              />
+              <Route
+                path='/my-hotels'
+                element={
+                  <Layout>
+                    <MyHotels />
+                  </Layout>
+                }
+              />
+            </>
+          )}
+
+          <Route path='*' element={<Navigate to="/" />} />
+        </Routes>
+      </Router>
     </>
   )
 }
