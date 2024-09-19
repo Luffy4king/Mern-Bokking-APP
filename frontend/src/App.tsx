@@ -13,7 +13,7 @@ import AddHotel from './pages/AddHotels';
 import { useAppContext } from './Context/AppContext';
 import MyHotels from './pages/MyHotels';
 import EditHotel from './pages/EditHotel';
-import SearchBar from './Components/SearchBar';
+
 import Search from './pages/Search';
 
 function App() {
