@@ -4,7 +4,8 @@ import TypeSection from "./TypeSection";
 import FacilitiesSection from "./FacilitiesSection";
 import GuestsSection from "./GuestSection";
 import ImagesSection from "./ImageSection";
-
+import { HotelType } from "../../../../backend/src/shared/types";
+import { useEffect } from "react";
 
 export type HotelFormData = {
   name: string;
@@ -22,19 +23,24 @@ export type HotelFormData = {
 };
 
 type Props = {
-
+  hotel?: HotelType;
   onSave: (hotelFormData: FormData) => void;
   isLoading: boolean;
 };
 
-const ManageHotelForm = ({ onSave, isLoading }: Props) => {
+const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
   const formMethods = useForm<HotelFormData>();
-  const { handleSubmit } = formMethods;
+  const { handleSubmit, reset } = formMethods;
 
+  useEffect(() => {
+    reset(hotel);
+  }, [hotel, reset]);
 
   const onSubmit = handleSubmit((formDataJson: HotelFormData) => {
     const formData = new FormData();
-  
+    if (hotel) {
+      formData.append("hotelId", hotel._id);
+    }
     formData.append("name", formDataJson.name);
     formData.append("city", formDataJson.city);
     formData.append("country", formDataJson.country);
@@ -49,6 +55,8 @@ const ManageHotelForm = ({ onSave, isLoading }: Props) => {
       formData.append(`facilities[${index}]`, facility);
     });
 
+    
+ ///if the  user goes and edit the hotel so they will see images and they can delte the images  and it goes to backend and the urls will be updated accordingly
     if (formDataJson.imageUrls) {
       formDataJson.imageUrls.forEach((url, index) => {
         formData.append(`imageUrls[${index}]`, url);
@@ -85,3 +93,7 @@ const ManageHotelForm = ({ onSave, isLoading }: Props) => {
 };
 
 export default ManageHotelForm;
+
+
+
+
